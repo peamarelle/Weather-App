@@ -1,6 +1,9 @@
-const fastify = require('fastify')({logger: true});
-require('dotenv').config();
-const PORT = process.env.PORT || 3000;
+import Fastify from 'fastify';
+const fastify = Fastify({ logger: true });
+import { PORT, prefix } from './config/index.js';
+import { routes } from './routes/location.routes.js';
+
+fastify.register(routes, { prefix });
 
 const start = async () => {
     try {
@@ -13,3 +16,5 @@ const start = async () => {
 }
 
 start();
+
+export default fastify;
