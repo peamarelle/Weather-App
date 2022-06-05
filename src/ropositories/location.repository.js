@@ -12,12 +12,15 @@ export class LocationRepository {
     async findByIp(ip) {
         const ipApiUrl = isInReservedRange(ip) ? `${this.basepath}` : `${this.basepath}/${ip}`;
         const ipApiResponse = await fetch(ipApiUrl);
-        return await ipApiResponse.json();
+        const { country, regionName, city, lat, lon } = await ipApiResponse.json();
+        return { country, regionName, city, lat, lon };
     }
 
-    async findByCity(city) {
+    async findeCityCoordinates(city) {
         const ipApiResponse = await fetch(`${MAPBOX_PATHBASE}${city}.json?access_token=${MAPBOX_ACCESS_TOKEN}&query=${city}`);
         const { features } = await ipApiResponse.json();
-        return features.filter(feature => this.placeTypes.includes(feature.place_type));
+        const [cityInformation] = features.filter(feature => this.placeTypes.includes(feature.place_type));
+        const [lon, lat] = cityInformation.geometry.coordinates;
+        return { lat, lon };
     }
 }
