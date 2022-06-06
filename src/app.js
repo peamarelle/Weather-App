@@ -10,6 +10,10 @@ export async function build(opts = {}) {
     await app.register(fastifySwagger, swagger.options);
     app.register(locationRoutes, { prefix });
     app.register(weatherRoutes, { prefix });
+    app.setErrorHandler(function (error, request, reply) {
+        const statusCode = error.statusCode || 500;
+        reply.status(statusCode).send({ status: 'Error', data: error });
+    })
     await app.ready();
     app.swagger();
     return app
