@@ -1,4 +1,7 @@
 export default {
-    verbose: true,
-    testEnvironment: 'node'
+    transform: {
+        "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+},
+      transformIgnorePatterns: [
+      ],
 };

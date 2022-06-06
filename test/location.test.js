@@ -1,4 +1,5 @@
 import { isInReservedRange } from '../src/helpers/index.js';
+import {LocationRepository} from '../src/ropositories/location.repository.js';
 const RESERVED_IP = '127.0.0.1', IP = '128.0.0.1';
 
 describe('isInReservedRange', () => {
@@ -12,3 +13,10 @@ describe('isInReservedRange', () => {
         expect(result).toBe(false);
     });
 });
+
+describe('LocationRepository', () => {
+    test('should be return json object', () => {
+        const result = new LocationRepository().findByIp(IP);
+        expect(result).toBeInstanceOf(Object);
+    })
+})
