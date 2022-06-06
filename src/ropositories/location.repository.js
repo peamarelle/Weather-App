@@ -16,7 +16,7 @@ export class LocationRepository {
         return { country, regionName, city, lat, lon };
     }
 
-    async findeCityCoordinates(city) {
+    async findCityCoordinates(city) {
         const ipApiResponse = await fetch(`${MAPBOX_PATHBASE}${city}.json?access_token=${MAPBOX_ACCESS_TOKEN}&query=${city}`);
         const { features } = await ipApiResponse.json();
         const [cityInformation] = features.filter(feature => this.placeTypes.includes(feature.place_type));

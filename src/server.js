@@ -1,13 +1,17 @@
 import { build } from './app.js';
 import { PORT } from './config/index.js';
 
-const start = async () => {
+const main = async () => {
+    const server = await build({
+        logger: {
+            level: 'info'
+        }
+    })
+    await start(server);
+}
+
+const start = async (server) => {
     try {
-        const server = await build({
-            logger: {
-                level: 'info'
-            }
-        })
         await server.listen(PORT);
         server.log.info(`server listening on ${server.server.address().port}`);
     } catch (err) {
@@ -16,4 +20,4 @@ const start = async () => {
     }
 }
 
-start();
+main();

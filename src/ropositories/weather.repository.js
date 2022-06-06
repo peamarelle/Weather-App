@@ -10,8 +10,8 @@ export class WeatherRepository {
 
     async findWeatherByCoordinates(lat, lon) {
         const ipApiResponse = await fetch(`${this.basepath}?lat=${lat}&lon=${lon}&appid=${this.api_key}`);
-        const { weather, main, visibility, wind, name } = await ipApiResponse.json();
-        return { weather, main, visibility, wind, name };
+        const { weather, main, visibility, wind, name, coord } = await ipApiResponse.json();
+        return { weather, main, visibility, wind, name, coord };
     }
 
     async getForecastByCoordinates(lat, lon) {
@@ -27,7 +27,7 @@ export class WeatherRepository {
             }));
         return {
             list,
-            name: forecast.city.name,
+            city: forecast.city,
         };
     }
 }
